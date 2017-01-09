@@ -6,6 +6,7 @@ use System\Classes\MarkupManager;
 use System\Classes\PluginManager;
 use Illuminate\Foundation\AliasLoader;
 use October\Rain\Support\Traits\Singleton;
+use OctoberFa\Persian\Classes\LanguageDetector;
 use \Backend\Classes\Controller as BackendController;
 
 class Persian
@@ -73,6 +74,9 @@ class Persian
      */
     public function pDate($date=null,$format="Y/m/d")
     {
+        if (LanguageDetector::getLanguage() != 'fa'){
+                return Argon::parse($date)->format($format);
+        }
         return JDate::forge($date)->format($format);
     }
 }
