@@ -602,7 +602,22 @@ if(this.el.parentNode){this.el.parentNode.removeChild(this.el);}}};return Pikada
 {'use strict';$.fn.pikaday=function()
 {var args=arguments;if(!args||!args.length){args=[{}];}
 return this.each(function()
-{var self=$(this),plugin=self.data('pikaday');if(!(plugin instanceof Pikaday)){if(typeof args[0]==='object'){var options=$.extend({},args[0]);options.field=self[0];self.data('pikaday',new Pikaday(options));}}else{if(typeof args[0]==='string'&&typeof plugin[args[0]]==='function'){plugin[args[0]].apply(plugin,Array.prototype.slice.call(args,1));if(args[0]==='destroy'){self.removeData('pikaday');}}}});};}));+function($){var removeList=["a","an","as","at","before","but","by","for","from","is","in","into","like","of","off","on","onto","per","since","than","the","this","that","to","up","via","with",'از','به','در','با','یا','یک','قبل','است','بالا','پایین','این','آن']
+{var self=$(this),plugin=self.data('pikaday');if(!(plugin instanceof Pikaday)){if(typeof args[0]==='object'){var options=$.extend({},args[0]);options.field=self[0];self.data('pikaday',new Pikaday(options));}}else{if(typeof args[0]==='string'&&typeof plugin[args[0]]==='function'){plugin[args[0]].apply(plugin,Array.prototype.slice.call(args,1));if(args[0]==='destroy'){self.removeData('pikaday');}}}});};}));+function($){"use strict";var toEnglishDigits=function(str){var charCodeZero='۰'.charCodeAt(0);return(str.replace(/[۰-۹]/g,function(w){return w.charCodeAt(0)-charCodeZero}))}
+var DatePicker=$.fn.datePicker.Constructor
+DatePicker.prototype.getDateFormat=function(){var format='jYYYY-jMM-jDD'
+if(this.options.format){format=this.options.format}
+else if(this.locale){format=moment().locale(this.locale).localeData().longDateFormat('l')}
+return format}
+DatePicker.prototype.initDatePicker=function(){var self=this,dateFormat=this.getDateFormat(),now=moment(moment().tz(this.timezone)).format()
+var pikadayOptions={yearRange:this.options.yearRange,format:dateFormat,setDefaultDate:now,isRtl:true,onOpen:function(){var $field=$(this._o.trigger)
+$(this.el).css({left:'auto',right:$(window).width()-$field.offset().left-$field.outerWidth()})},onSelect:function(){self.onSelectDatePicker.call(self,this.getMoment())}}
+this.$datePicker.val(this.getDataLockerValue(dateFormat))
+if(this.options.minDate){pikadayOptions.minDate=new Date(this.options.minDate)}
+if(this.options.maxDate){pikadayOptions.maxDate=new Date(this.options.maxDate)}
+this.$datePicker.pikaday(pikadayOptions)}
+DatePicker.prototype.getMomentLoadValue=function(value,format){var momentObj=moment(moment.tz(value,this.appTimezone))
+momentObj=moment(momentObj.tz(this.timezone))
+return momentObj.format(format)}}(window.jQuery);+function($){var removeList=["a","an","as","at","before","but","by","for","from","is","in","into","like","of","off","on","onto","per","since","than","the","this","that","to","up","via","with",'از','به','در','با','یا','یک','قبل','است','بالا','پایین','این','آن']
 var InputPreset=$.fn.inputPreset.Constructor
 function slugify(slug,numChars){var regex=new RegExp('\\b('+removeList.join('|')+')\\b','gi')
 slug=slug.replace(regex,'')

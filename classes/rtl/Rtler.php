@@ -1,5 +1,6 @@
 <?php namespace OctoberFa\Persian\Classes\Rtl;
 
+use File;
 use Event;
 use Config;
 use Request;

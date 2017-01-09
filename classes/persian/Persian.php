@@ -1,5 +1,6 @@
 <?php namespace OctoberFa\Persian\Classes\Persian;
 
+use October\Rain\Argon\Argon;
 use Cms\Classes\Page as CmsPage;
 use System\Classes\MarkupManager;
 use System\Classes\PluginManager;
