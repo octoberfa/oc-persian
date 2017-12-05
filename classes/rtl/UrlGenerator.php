@@ -4,7 +4,6 @@ use File;
 use Lang;
 use Config;
 use Request;
-use OctoberFa\Persian\Classes\LanguageDetector;
 use Illuminate\Routing\UrlGenerator as baseGenerator;
 
 class UrlGenerator extends baseGenerator
@@ -19,7 +18,6 @@ class UrlGenerator extends baseGenerator
     public function asset($path, $secure = null)
     {
         if ($this->isValidUrl($path)) return $path;
-        if(!LanguageDetector::isRtl()) return parent::asset($path,$secure);
         if(!strpos($path,'/octoberfa/persian/assets/css/persian-min.css')) {
             $backendUri = Config::get('cms.backendUri', 'backend');
             $requestUrl = Request::url();

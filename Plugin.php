@@ -8,7 +8,6 @@ use System\Classes\PluginBase;
 use System\Classes\CombineAssets;
 use OctoberFa\Persian\Classes\Rtl\Rtler;
 use OctoberFa\Persian\Classes\Persian\Persian;
-use OctoberFa\Persian\Classes\LanguageDetector;
 /**
  * Persian Plugin Information File
  */
@@ -46,11 +45,8 @@ class Plugin extends PluginBase
     }
 
     public function registerEvents(){
-        \App::before(function ($request) {
-            \OctoberFa\Persian\Classes\LanguageDetector::detect();
-        });
         Event::listen('backend.page.beforeDisplay', function ($controller, $action, $params) {
-            if (!Request::ajax() && LanguageDetector::isRtl()) {
+            if (!Request::ajax()) {
                 $controller->addJs(Config::get('cms.pluginsPath') . ('/octoberfa/persian/assets/js/persian-min.js'));
                 $controller->addCss(Config::get('cms.pluginsPath') . ('/octoberfa/persian/assets/css/persian-min.css'));
             }

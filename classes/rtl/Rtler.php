@@ -1,12 +1,10 @@
 <?php namespace OctoberFa\Persian\Classes\Rtl;
 
-use File;
 use Event;
 use Config;
 use Request;
 use System\Classes\MarkupManager;
 use October\Rain\Support\Traits\Singleton;
-use OctoberFa\Persian\Classes\LanguageDetector;
 
 class Rtler
 {
@@ -22,8 +20,13 @@ class Rtler
     }
     protected function registerUrlGenerator()
     {
-        $this->app['url'] = $this->app->share(function ($app) {
+        $this->app->singleton('url', function ($app) {
             $routes = $app['router']->getRoutes();
+
+            // The URL generator needs the route collection that exists on the router.
+            // Keep in mind this is an object, so we're passing by references here
+            // and all the registered routes will be available to the generator.
+            $app->instance('routes', $routes);
 
             $url = new UrlGenerator(
                 $routes, $app->rebinding(
@@ -69,9 +72,6 @@ class Rtler
      */
     public function flipCss($paths)
     {
-        if (!LanguageDetector::isRtl()) {
-            return $paths;
-        }
         if (!is_array($paths)) {
             $paths = [$paths];
         }

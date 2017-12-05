@@ -3,7 +3,7 @@
     "description": "Persian support for octobercms",
     "type": "october-plugin",
     "require": {
-        "cssjanus/cssjanus": "^1.1"
+        "cssjanus/cssjanus": "^1.2"
     },
     "license": "MIT",
     "authors": [

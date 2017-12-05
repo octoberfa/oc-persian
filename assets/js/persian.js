@@ -12,6 +12,5 @@
  =require ../source/october.datetime.jalali.js
  =require ../source/pikaday.js
  =require ../source/pikaday.jquery.js
- =require ../source/datepicker.jalali.js
  =require ../source/fix.inputpreset.js
  */
