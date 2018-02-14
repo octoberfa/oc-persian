@@ -10,7 +10,8 @@
  =require ../source/fix.rtl.js
  =require ../source/moment-jalaali.js
  =require ../source/october.datetime.jalali.js
- =require ../source/pikaday.js
- =require ../source/pikaday.jquery.js
+ =require ../source/persian-date.js
+ =require ../source/persian-datepicker.js
+ =require ../source/datepicker.js
  =require ../source/fix.inputpreset.js
  */
