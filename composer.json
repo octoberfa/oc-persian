@@ -1,19 +1,5 @@
 {
-    "name": "octoberfa/persian",
-    "description": "Persian support for octobercms",
-    "type": "october-plugin",
     "require": {
-        "cssjanus/cssjanus": "^1.2"
-    },
-    "license": "MIT",
-    "authors": [
-{
-            "name": "Sajjad Servatjoo",
-            "email": "sajjad.servatjoo@gmail.com"
-        },
-        {
-            "name": "Saman Sorushniya",
-            "email": "saman32c70@yahoo.com"
-        }
-    ]
+        "hekmatinasser/verta": "^1.9"
+    }
 }
