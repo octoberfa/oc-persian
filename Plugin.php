@@ -29,9 +29,9 @@ class Plugin extends PluginBase
     {
         return [
             'name' => 'Persian',
-            'description' => 'No description provided yet...',
+            'description' => 'Persian support for October cms',
             'author' => 'OctoberFa',
-            'icon' => 'icon-leaf',
+            'icon' => 'icon-headphones',
         ];
     }
 
