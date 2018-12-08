@@ -1,5 +1,4 @@
 <?php namespace OctoberFa\Persian;
-
 use Cms\Classes\Page as CmsPage;
 use Illuminate\Foundation\AliasLoader;
 use OctoberFa\Persian\Classes\CssFlipper;
@@ -9,7 +8,6 @@ use October\Rain\Argon\Argon;
 use System\Classes\MarkupManager;
 use System\Classes\PluginBase;
 use System\Classes\PluginManager;
-
 /**
  * Persian Plugin Information File
  */
@@ -19,7 +17,6 @@ class Plugin extends PluginBase
      * @var bool Plugin requires elevated permissions.
      */
     public $elevated = true;
-
     /**
      * Returns information about this plugin.
      *
@@ -34,7 +31,6 @@ class Plugin extends PluginBase
             'icon' => 'icon-headphones',
         ];
     }
-
     /**
      * Register method, called when the plugin is first registered.
      *
@@ -43,19 +39,15 @@ class Plugin extends PluginBase
     public function register()
     {
         Argon::setLocale('fa');
-
         AliasLoader::getInstance()->alias(
             'Model',
             '\OctoberFa\Persian\Classes\Model'
         );
         AliasLoader::getInstance()->alias('October\Rain\Database\Traits\Sluggable', 'OctoberFa\Persian\Classes\Sluggable');
-
         $this->registerUrlGenerator();
         $this->fixValidations();
         $this->registerMarkupTags();
-
     }
-
     /**
      * Boot method, called right before the request route.
      *
@@ -67,7 +59,6 @@ class Plugin extends PluginBase
         if (!\App::runningInBackend()) {
             return;
         }
-
         // Listen for `backend.page.beforeDisplay` event and inject js to current controller instance.
         \Event::listen('backend.page.beforeDisplay', function ($controller, $action, $params) {
             if (!\Request::ajax()) {
@@ -76,7 +67,6 @@ class Plugin extends PluginBase
             }
         });
     }
-
     protected function registerUrlGenerator()
     {
         $this->app->singleton('url', function ($app) {
@@ -103,7 +93,6 @@ class Plugin extends PluginBase
             $app['url']->setRequest($request);
         };
     }
-
     public function fixValidations()
     {
         CmsPage::extend(function ($page) {
@@ -127,7 +116,6 @@ class Plugin extends PluginBase
             }, -1);
         }
     }
-
     public function registerMarkupTags()
     {
         MarkupManager::instance()->registerCallback(function ($manager) {
@@ -135,14 +123,12 @@ class Plugin extends PluginBase
                 'pDate' => [$this, 'pDate'],
             ]);
         });
-
         MarkupManager::instance()->registerCallback(function ($manager) {
             $manager->registerFilters([
                 'flipCss' => [$this, 'flipCss'],
             ]);
         });
     }
-
     /**
      * Twig Markup Filter 'pDate'
      * @param $date
@@ -153,7 +139,6 @@ class Plugin extends PluginBase
     {
         return Verta::instance($date)->format($format);
     }
-
     /**
      * Twig Markup Filter 'flipCss'
      * @param $paths

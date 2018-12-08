@@ -12,4 +12,7 @@ class Verta extends BaseVerta{
     {
         return $this->format('D, M j, Y g:i A');
     }
+    public function diffForHumans(){
+        return Argon::instance($this->DateTime())->diffForHumans();
+    }
 }
