@@ -25,32 +25,6 @@ class Model extends BaseModel{
             }
 
         });
-//
-//
-//        $this->bindEvent('model.beforeValidate', function () {
-//
-//            $this->__onFetchingModel = false;
-//            $this->__onAfterValidateModel = true;
-//            foreach ($this->getDates() as $key) {
-//                if (!isset($this->attributes[$key])) {
-//                    continue;
-//                }
-//                $this->attributes[$key] = $this->asDateTime($this->attributes[$key]);
-//            }
-//
-//        });
-//        $this->bindEvent('model.afterValidate', function () {
-//
-//            $this->__onFetchingModel = true;
-//            $this->__onAfterValidateModel = false;
-//            foreach ($this->getDates() as $key) {
-//                if (!isset($this->attributes[$key])) {
-//                    continue;
-//                }
-//                $this->attributes[$key] = $this->asDateTime($this->attributes[$key]);
-//            }
-//
-//        });
         $this->bindEvent('model.beforeSave', function () {
             $this->__onFetchingModel = false;
             $this->__onAfterValidateModel = true;
@@ -60,14 +34,7 @@ class Model extends BaseModel{
                 }
                 $this->attributes[$key] = $this->asDateTime($this->attributes[$key]);
             }
-            // $this->attributes[$key]
-        });
-        $this->bindEvent('model.beforeSave', function () {
-
-//             dd($this);
-
-        });
-        
+        });        
     }
 
     /**
@@ -132,5 +99,17 @@ class Model extends BaseModel{
         ));
     }
 
+
+    /**
+     * Perform the actual delete query on this model instance.
+     *
+     * @return void
+     */
+    protected function runSoftDelete()
+    {
+        $this->__onFetchingModel = false;
+        $this->__onAfterValidateModel = true;
+        parent::runSoftDelete();
+    } 
     
 }
