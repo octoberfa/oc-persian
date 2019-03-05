@@ -1,7 +1,2 @@
-/node_modules/
-/vendor/
-/assets/js/
-/assets/sass/
-package-lock.json
-package.json
-webpack.mix.js
+/node_modules
+/vendors
