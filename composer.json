@@ -1,4 +1,6 @@
 {
+    "name": "octoberfa/oc-persian",
+    "type": "october-plugin",
     "require": {
         "hekmatinasser/verta": "^1.9"
     }
