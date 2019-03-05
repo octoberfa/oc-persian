@@ -10,22 +10,6 @@ mix.setPublicPath('./assets/dist');
 
 mix.sourceMaps();
 
-// mix.browserSync({
-//     injectChanges: true,
-//     files: [
-//         '**/*.htm',
-//         './assets/sass/**/*.scss',
-//         './assets/js/*.js',
-//         {
-//             match: ['./assets/images/**'],
-//             fn: function (event, file) {
-//                 this.reload()
-//             }
-//         }
-//     ],
-//     proxy: 'mosharekat.test'
-// });
-
 mix.sass('./assets/sass/all.scss', './all.css')
     .options({
         processCssUrls: false
@@ -33,14 +17,14 @@ mix.sass('./assets/sass/all.scss', './all.css')
 
 let scripts = [
     './node_modules/moment-jalaali/build/moment-jalaali.js',
+    './assets/js/pikaday-jalali.js',
     './assets/js/october.datetime.js',
-    './assets/js/persianDatepicker.js',    
-    './assets/js/datepicker.js',
     './assets/js/october.verticalmenu.js',
     './assets/js/fix.october.sidepaneltab.js',
     './assets/js/fix.october.flyout.js',
     './assets/js/fix.input.preset.js',
-    './assets/js/fix.vis.js'
+    './assets/js/fix.vis.js',
+    './assets/js/fix.filter.dates.js',
 ];
 
 mix.babel(scripts, './assets/dist/all.js');

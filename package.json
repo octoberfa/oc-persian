@@ -20,8 +20,10 @@
   "author": "Panagiotis Koursaris",
   "license": "MIT",
   "devDependencies": {
-    "cross-env": "^5.1",
-    "laravel-mix": "^2.1.14",
-    "moment-jalaali": "^0.7.4"
+    "cross-env": "^5.2.0",
+    "laravel-mix": "^4.0.14",
+    "moment-jalaali": "^0.8.3",
+    "sass": "^1.17.2",
+    "sass-loader": "^7.1.0"
   }
 }

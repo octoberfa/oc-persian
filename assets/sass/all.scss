@@ -1,20 +1,25 @@
-@import "./persianDatepicker-default.css";
+// @import "./persianDatepicker-default.css";
 @import "./fonts.css";
-html,body{
+
+html,
+body {
     direction: rtl;
-    font-family: "Vazir", -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    font-family: "Vazir", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
-html{
+
+html {
     overflow-x: hidden;
 }
 
 // tabs arrow
-.fancy-layout .control-tabs.master-tabs:before, .fancy-layout.control-tabs.master-tabs:before {
+.fancy-layout .control-tabs.master-tabs:before,
+.fancy-layout.control-tabs.master-tabs:before {
     left: 8px;
     right: auto;
 }
 
-.fancy-layout .control-tabs.master-tabs:after, .fancy-layout.control-tabs.master-tabs:after {
+.fancy-layout .control-tabs.master-tabs:after,
+.fancy-layout.control-tabs.master-tabs:after {
     left: auto;
     right: 8px;
 }
@@ -46,9 +51,9 @@ html{
     right: 10px
 }
 
-// popover 
+// popover
 div.control-popover {
-    right: auto!important
+    right: auto !important
 }
 
 div.control-popover.placement-left>div::before {
@@ -123,12 +128,12 @@ div.control-popover.placement-top>div::after {
 .draggable-component-item>div::after,
 .component-list .components div.layout-cell>div::after,
 div.control-componentlist div.components div.layout-cell>div::after {
-    text-indent: 3px!important;
-    transform: rotate(180deg)!important
+    text-indent: 3px !important;
+    transform: rotate(180deg) !important
 }
 
 
-.component-list .components div.layout div.layout-row div.layout-cell > div:before{
+.component-list .components div.layout div.layout-row div.layout-cell>div:before {
     text-indent: 2px !important;
     transform: rotate(-90deg) !important;
 }
@@ -139,13 +144,13 @@ div.control-componentlist div.components div.layout-cell>div::after {
 }
 
 //plugin installer
-.product-search > i.icon{
+.product-search>i.icon {
     left: auto !important;
     right: 15px !important;
 }
 
 // ?????
-.sp-container{
+.sp-container {
     right: auto !important;
     left: 0;
 }
@@ -157,9 +162,12 @@ div.control-componentlist div.components div.layout-cell>div::after {
     direction: ltr
 }
 
-.beautifier-container{
+.beautifier-container {
     direction: ltr;
-    .beautifier-stacktrace-line-internal, .beautifier-stacktrace-line-function, .beautifier-file{
+
+    .beautifier-stacktrace-line-internal,
+    .beautifier-stacktrace-line-function,
+    .beautifier-file {
         margin-right: auto;
         margin-left: 55px;
     }
@@ -171,7 +179,30 @@ nav#layout-mainmenu .toolbar-item:before {
     right: auto !important;
     left: -12px;
 }
-nav#layout-mainmenu .toolbar-item:after{
+
+nav#layout-mainmenu .toolbar-item:after {
     left: auto !important;
     right: -12px;
+}
+
+.control-treeview ol>li>div>ul.submenu {
+    &:before {
+        left: -20px;
+        right: auto;
+    }
+
+    &:after {
+        left: auto;
+        right: -20px;
+    }
+}
+
+.control-treeview ol>li>div:active>ul.submenu:before {
+    background-position: left -77px;
+}
+.pika-prev, .is-rtl .pika-next{
+    float: left;
+}
+.pika-next, .is-rtl .pika-prev {
+    float: right;
 }
