@@ -1,0 +1,29 @@
+{
+  "name": "octoberfa-plugin",
+  "version": "1.0.0",
+  "description": "October CMS Boilerplate Theme to help you start up quickly.",
+  "scripts": {
+    "dev": "npm run development",
+    "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch": "npm run development -- --watch",
+    "watch-poll": "npm run watch -- --watch-poll",
+    "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "prod": "npm run production",
+    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+  },
+  "keywords": [
+    "octobercms",
+    "theme",
+    "webpack",
+    "laravel mix"
+  ],
+  "author": "Panagiotis Koursaris",
+  "license": "MIT",
+  "devDependencies": {
+    "cross-env": "^5.2.0",
+    "laravel-mix": "^4.0.14",
+    "moment-jalaali": "^0.8.3",
+    "sass": "^1.17.2",
+    "sass-loader": "^7.1.0"
+  }
+}
