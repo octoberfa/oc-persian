@@ -89,7 +89,7 @@ class Model extends BaseModel{
             if(substr($value,0,2) == '13'){
                 return Verta::parseFormat('Y-m-d',$value)->startDay();
             }
-            return new Varta(Argon::createFromFormat('Y-m-d', $value)->startOfDay());
+            return new Verta(Argon::createFromFormat('Y-m-d', $value)->startOfDay());
         }
         if(substr($value,0,2) == '13'){
             return Verta::parse($value);
