@@ -810,7 +810,7 @@ JDate.UTC = function (year, month, date, hours, minutes, seconds, milliseconds) 
                 setDefaultDate: false,
 
                 // first day of week (0: Sunday, 1: Monday etc)
-                firstDay: 0,
+                firstDay: 6,
 
                 // the default flag for moment's strict date parsing
                 formatStrict: false,
@@ -838,7 +838,7 @@ JDate.UTC = function (year, month, date, hours, minutes, seconds, milliseconds) 
                 startRange: null,
                 endRange: null,
 
-                isRTL: true,
+                isRTL: false,
 
                 persianNumbers: true,
 
@@ -897,7 +897,7 @@ JDate.UTC = function (year, month, date, hours, minutes, seconds, milliseconds) 
              * templating functions to abstract HTML rendering
              */
             renderDayName = function (opts, day, abbr) {
-                day += opts.firstDay;
+                day += 6;
                 while (day >= 7) {
                     day -= 7;
                 }
@@ -1875,8 +1875,7 @@ JDate.UTC = function (year, month, date, hours, minutes, seconds, milliseconds) 
  * Copyright © 2013 David Bushell | BSD & MIT license | https://github.com/Pikaday/Pikaday
  */
 
-(function (root, factory)
-{
+(function (root, factory) {
     'use strict';
 
     if (typeof exports === 'object') {
@@ -1889,21 +1888,18 @@ JDate.UTC = function (year, month, date, hours, minutes, seconds, milliseconds) 
         // Browser globals
         factory(root.jQuery, root.Pikaday);
     }
-}(this, function ($, Pikaday)
-{
+}(this, function ($, Pikaday) {
     'use strict';
 
-    $.fn.pikaday = function()
-    {
+    $.fn.pikaday = function () {
         var args = arguments;
 
         if (!args || !args.length) {
-            args = [{ }];
+            args = [{}];
         }
 
-        return this.each(function()
-        {
-            var self   = $(this),
+        return this.each(function () {
+            var self = $(this),
                 plugin = self.data('pikaday');
 
             if (!(plugin instanceof Pikaday)) {
@@ -1914,7 +1910,7 @@ JDate.UTC = function (year, month, date, hours, minutes, seconds, milliseconds) 
                 }
             } else {
                 if (typeof args[0] === 'string' && typeof plugin[args[0]] === 'function') {
-                    plugin[args[0]].apply(plugin, Array.prototype.slice.call(args,1));
+                    plugin[args[0]].apply(plugin, Array.prototype.slice.call(args, 1));
 
                     if (args[0] === 'destroy') {
                         self.removeData('pikaday');

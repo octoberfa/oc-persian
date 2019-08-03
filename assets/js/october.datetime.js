@@ -26,10 +26,13 @@
  * dateTimeLongMin  -> Sat, Apr 23, 2016 6:29 AM
  *
  */
-+function ($) { "use strict";
++ function ($) {
+    "use strict";
     var Base = $.oc.foundation.base,
         BaseProto = Base.prototype
-        moment.loadPersian({dialect: 'persian-modern'});
+    moment.loadPersian({
+        dialect: 'persian-modern'
+    });
 
     var DateTimeConverter = function (element, options) {
         this.$el = $(element)
@@ -43,7 +46,7 @@
     DateTimeConverter.prototype = Object.create(BaseProto)
     DateTimeConverter.prototype.constructor = DateTimeConverter
 
-    DateTimeConverter.prototype.init = function() {
+    DateTimeConverter.prototype.init = function () {
         this.initDefaults()
 
         this.$el.text(this.getDateTimeValue())
@@ -51,7 +54,7 @@
         this.$el.one('dispose-control', this.proxy(this.dispose))
     }
 
-    DateTimeConverter.prototype.initDefaults = function() {
+    DateTimeConverter.prototype.initDefaults = function () {
         if (!this.options.timezone) {
             this.options.timezone = $('meta[name="backend-timezone"]').attr('content')
         }
@@ -67,6 +70,7 @@
         if (this.options.formatAlias) {
             this.options.format = this.getFormatFromAlias(this.options.formatAlias)
         }
+        this.options.isRTL = true;
 
         this.appTimezone = $('meta[name="app-timezone"]').attr('content')
         if (!this.appTimezone) {
@@ -74,9 +78,9 @@
         }
     }
 
-    DateTimeConverter.prototype.toJalaliFormat = function(format) {
+    DateTimeConverter.prototype.toJalaliFormat = function (format) {
         for (var i = 0; i < format.length; i++) {
-            if(!i || (format[i-1] !== "j" && format[i-1] !== format[i])) {
+            if (!i || (format[i - 1] !== "j" && format[i - 1] !== format[i])) {
                 if (format[i] === "Y" || format[i] === "M" || format[i] === "D" || format[i] === "g") {
                     format = format.slice(0, i) + "j" + format.slice(i);
                 }
@@ -85,11 +89,11 @@
         return format;
     }
 
-    DateTimeConverter.prototype.getDateTimeValue = function() {
+    DateTimeConverter.prototype.getDateTimeValue = function () {
         this.datetime = this.$el.attr('datetime')
-        if(this.datetime[0] == 1){
+        if (this.datetime[0] == 1) {
             this.datetime = moment(this.datetime, 'jYYYY-jMM-jDD HH:mm:ss')
-        }else{
+        } else {
             this.datetime = moment(this.datetime, 'YYYY-MM-DD HH:mm:ss')
         }
         if (this.$el.get(0).hasAttribute('data-ignore-timezone')) {
@@ -100,9 +104,9 @@
         var momentObj = moment(moment.tz(this.datetime.format('YYYY-MM-DD HH:mm:ss'), this.appTimezone)),
             result
         if (this.options.locale) {
-            
+
             momentObj = moment(momentObj.locale(this.options.locale))
-            
+
         }
 
         if (this.options.timezone) {
@@ -111,17 +115,15 @@
 
         if (this.options.timeSince) {
             result = momentObj.fromNow()
-        }
-        else if (this.options.timeTense) {
+        } else if (this.options.timeTense) {
             result = momentObj.calendar()
-        }
-        else {
+        } else {
             result = momentObj.format(this.options.format)
         }
         return result
     }
 
-    DateTimeConverter.prototype.getFormatFromAlias = function(alias) {
+    DateTimeConverter.prototype.getFormatFromAlias = function (alias) {
         var map = {
             time: 'LT',
             timeLong: 'LTS',
@@ -138,7 +140,7 @@
         return map[alias] ? map[alias] : 'llll'
     }
 
-    DateTimeConverter.prototype.dispose = function() {
+    DateTimeConverter.prototype.dispose = function () {
         this.$el.off('dispose-control', this.proxy(this.dispose))
         this.$el.removeData('oc.dateTimeConverter')
 
@@ -163,11 +165,12 @@
     var old = $.fn.dateTimeConverter
 
     $.fn.dateTimeConverter = function (option) {
-        var args = Array.prototype.slice.call(arguments, 1), items, result
+        var args = Array.prototype.slice.call(arguments, 1),
+            items, result
 
         items = this.each(function () {
-            var $this   = $(this)
-            var data    = $this.data('oc.dateTimeConverter')
+            var $this = $(this)
+            var data = $this.data('oc.dateTimeConverter')
             var options = $.extend({}, DateTimeConverter.DEFAULTS, $this.data(), typeof option == 'object' && option)
             if (!data) $this.data('oc.dateTimeConverter', (data = new DateTimeConverter(this, options)))
             if (typeof option == 'string') result = data[option].apply(data, args)
@@ -184,7 +187,7 @@
         return this
     }
 
-    $(document).render(function (){
+    $(document).render(function () {
         $('time[data-datetime-control]').dateTimeConverter()
     })
 
