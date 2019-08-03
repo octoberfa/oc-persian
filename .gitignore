@@ -1,2 +1,6 @@
 /node_modules
 /vendors
+/assets/js
+/assets/sass
+package.json
+package-lock.json
