@@ -4,7 +4,6 @@ use Illuminate\Foundation\AliasLoader;
 use OctoberFa\Persian\Classes\CssFlipper;
 use OctoberFa\Persian\Classes\UrlGenerator;
 use OctoberFa\Persian\Classes\Verta;
-use October\Rain\Argon\Argon;
 use System\Classes\MarkupManager;
 use System\Classes\PluginBase;
 use System\Classes\PluginManager;
@@ -38,11 +37,20 @@ class Plugin extends PluginBase
      */
     public function register()
     {
-        Argon::setLocale('fa');
+        // Argon::setLocale('fa');
         AliasLoader::getInstance()->alias(
             'Model',
             '\OctoberFa\Persian\Classes\Model'
         );
+        AliasLoader::getInstance()->alias(
+            'Argon',
+            '\OctoberFa\Persian\Classes\Argon'
+        );
+        AliasLoader::getInstance()->alias(
+            'October\Rain\Argon\Argon',
+            '\OctoberFa\Persian\Classes\Argon'
+        );
+
         AliasLoader::getInstance()->alias('October\Rain\Database\Traits\Sluggable', 'OctoberFa\Persian\Classes\Sluggable');
         $this->registerUrlGenerator();
         $this->fixValidations();
@@ -62,6 +70,7 @@ class Plugin extends PluginBase
         // Listen for `backend.page.beforeDisplay` event and inject js to current controller instance.
         \Event::listen('backend.page.beforeDisplay', function ($controller, $action, $params) {
             if (!\Request::ajax()) {
+                $controller->addJs(\Config::get('cms.pluginsPath') . ('/octoberfa/persian/assets/dist/vendor.js'));
                 $controller->addJs(\Config::get('cms.pluginsPath') . ('/octoberfa/persian/assets/dist/all.js'));
                 $controller->addCss(\Config::get('cms.pluginsPath') . ('/octoberfa/persian/assets/dist/all.css'));
             }

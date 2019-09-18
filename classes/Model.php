@@ -13,7 +13,6 @@ class Model extends BaseModel{
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        
         $this->bindEvent('model.afterFetch', function () {
 
             $this->__onFetchingModel = true;

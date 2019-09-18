@@ -1,6 +1,6 @@
 <?php namespace OctoberFa\Persian\Classes;
 
-use October\Rain\Argon\Argon as BaseArgon;
+use Jenssegers\Date\Date as BaseArgon;
 
 use Jenssegers\Date\Date as DateBase;
 
@@ -74,4 +74,5 @@ class Argon extends BaseArgon
         }
         return $verta->format($format);
     }
+
 }

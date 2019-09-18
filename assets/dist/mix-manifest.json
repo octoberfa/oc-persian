@@ -1,5 +1,6 @@
 {
+    "/all.js": "/all.js",
     "/all.css": "/all.css",
-    "/mix.js.map": "/mix.js.map",
-    "/all.js": "/all.js"
+    "/all.js.map": "/all.js.map",
+    "/vendor.js": "/vendor.js"
 }
