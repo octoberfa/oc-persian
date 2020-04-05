@@ -11,7 +11,7 @@
  * - Moment Timezone library (moment.timezone.js)
  */
 
-+ function ($) {
++function ($) {
     "use strict";
 
     var Base = $.oc.foundation.base,
@@ -127,8 +127,8 @@
         // if (lang) {
         //     pikadayOptions.i18n = lang
         // }
-        if(this.getDataLockerValue('x') > 0){
-            this.$datePicker.attr('value',this.getDataLockerValue('x'))
+        if (this.getDataLockerValue('x') > 0) {
+            this.$datePicker.attr('value', this.getDataLockerValue('x'))
         }
 
         // if (this.options.minDate) {
@@ -198,7 +198,6 @@
             twelvehour: this.isTimeTwelveHour()
             // afterDone: this.proxy(this.onSelectTimePicker)
         })
-
         this.$timePicker.val(this.getDataLockerValue(this.getTimeFormat()))
     }
 
@@ -269,10 +268,10 @@
 
     DatePicker.prototype.getDataLockerValue = function (format) {
         var value = this.$dataLocker.val()
-        value = moment(value, 'jYYYY-jMM-jDD hh:mm:ss')
-        return value ?
-            this.getMomentLoadValue(value, format) :
-            null
+        value = moment.utc(value, 'jYYYY-jMM-jDD HH:mm:ss')
+        return value
+            ? this.getMomentLoadValue(value, format)
+            : null
     }
 
     DatePicker.prototype.getMomentLoadValue = function (value, format) {
