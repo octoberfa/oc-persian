@@ -1,7 +1,23 @@
 {
-    "name": "octoberfa/oc-persian",
-    "type": "october-plugin",
-    "require": {
-        "hekmatinasser/verta": "^1.9"
+  "name": "octoberfa/oc-persian",
+  "type": "october-plugin",
+  "keywords": [
+    "october",
+    "cms",
+    "rtl",
+    "persian",
+    "farsi"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Sajjad Servatjoo",
+      "email": "sajjad.servatjoo@gmail.com",
+      "role": "Co-founder"
     }
+  ],
+  "require": {
+    "php": ">=7.2",
+    "composer/installers": "~1.0"
+  }
 }

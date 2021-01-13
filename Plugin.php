@@ -1,4 +1,9 @@
-<?php namespace OctoberFa\Persian;
+<?php
+
+namespace OctoberFa\Persian;
+
+use App;
+use Event;
 use Cms\Classes\Page as CmsPage;
 use Illuminate\Foundation\AliasLoader;
 use OctoberFa\Persian\Classes\CssFlipper;
@@ -7,6 +12,7 @@ use OctoberFa\Persian\Classes\Verta;
 use System\Classes\MarkupManager;
 use System\Classes\PluginBase;
 use System\Classes\PluginManager;
+
 /**
  * Persian Plugin Information File
  */
@@ -16,6 +22,12 @@ class Plugin extends PluginBase
      * @var bool Plugin requires elevated permissions.
      */
     public $elevated = true;
+
+    /**
+     * @var array Plugin dependencies
+     */
+    public $require = ['OctoberFa.Rtler', 'OctoberFa.Calendars'];
+
     /**
      * Returns information about this plugin.
      *
@@ -37,24 +49,21 @@ class Plugin extends PluginBase
      */
     public function register()
     {
-        // Argon::setLocale('fa');
-        AliasLoader::getInstance()->alias(
-            'Model',
-            '\OctoberFa\Persian\Classes\Model'
-        );
-        AliasLoader::getInstance()->alias(
-            'Argon',
-            '\OctoberFa\Persian\Classes\Argon'
-        );
-        AliasLoader::getInstance()->alias(
-            'October\Rain\Argon\Argon',
-            '\OctoberFa\Persian\Classes\Argon'
-        );
-
+        Event::listen('octoberfa.calendars.getBackendCalendarLanguage', function () {
+            return "fa";
+        });
+        Event::listen('octoberfa.calendars.getBackendCalendarType', function () {
+            return "persian";
+        });
         AliasLoader::getInstance()->alias('October\Rain\Database\Traits\Sluggable', 'OctoberFa\Persian\Classes\Sluggable');
-        $this->registerUrlGenerator();
+
         $this->fixValidations();
-        $this->registerMarkupTags();
+        \Event::listen('backend.page.beforeDisplay', function ($controller, $action, $params) {
+            App::setLocale('fa');
+            if (!\Request::ajax()) {
+                $controller->addJs(\Config::get('cms.pluginsPath') . ('/octoberfa/persian/assets/dist/fix.input.preset.js'));
+            }
+        });
     }
     /**
      * Boot method, called right before the request route.
@@ -64,44 +73,19 @@ class Plugin extends PluginBase
     public function boot()
     {
         // Check if we are currently in backend module.
-        if (!\App::runningInBackend()) {
-            return;
-        }
+        // if (!\App::runningInBackend()) {
+        //     return;
+        // }
         // Listen for `backend.page.beforeDisplay` event and inject js to current controller instance.
-        \Event::listen('backend.page.beforeDisplay', function ($controller, $action, $params) {
-            if (!\Request::ajax()) {
-                $controller->addJs(\Config::get('cms.pluginsPath') . ('/octoberfa/persian/assets/dist/vendor.js'));
-                $controller->addJs(\Config::get('cms.pluginsPath') . ('/octoberfa/persian/assets/dist/all.js'));
-                $controller->addCss(\Config::get('cms.pluginsPath') . ('/octoberfa/persian/assets/dist/all.css'));
-            }
-        });
+        // \Event::listen('backend.page.beforeDisplay', function ($controller, $action, $params) {
+        //     if (!\Request::ajax()) {
+        //         $controller->addJs(\Config::get('cms.pluginsPath') . ('/octoberfa/persian/assets/dist/vendor.js'));
+        //         $controller->addJs(\Config::get('cms.pluginsPath') . ('/octoberfa/persian/assets/dist/all.js'));
+        //         $controller->addCss(\Config::get('cms.pluginsPath') . ('/octoberfa/persian/assets/dist/all.css'));
+        //     }
+        // });
     }
-    protected function registerUrlGenerator()
-    {
-        $this->app->singleton('url', function ($app) {
-            $routes = $app['router']->getRoutes();
-            $url = new UrlGenerator(
-                $routes, $app->rebinding(
-                    'request', $this->requestRebinder()
-                ));
-            $url->setSessionResolver(function () {
-                return $this->app['session'];
-            });
-            // If the route collection is "rebound", for example, when the routes stay
-            // cached for the application, we will need to rebind the routes on the
-            // URL generator instance so it has the latest version of the routes.
-            $app->rebinding('routes', function ($app, $routes) {
-                $app['url']->setRoutes($routes);
-            });
-            return $url;
-        });
-    }
-    protected function requestRebinder()
-    {
-        return function ($app, $request) {
-            $app['url']->setRequest($request);
-        };
-    }
+
     public function fixValidations()
     {
         CmsPage::extend(function ($page) {
@@ -124,51 +108,5 @@ class Plugin extends PluginBase
                 $page->fileName = \Str::ascii($page->fileName);
             }, -1);
         }
-    }
-    public function registerMarkupTags()
-    {
-        MarkupManager::instance()->registerCallback(function ($manager) {
-            $manager->registerFilters([
-                'pDate' => [$this, 'pDate'],
-            ]);
-        });
-        MarkupManager::instance()->registerCallback(function ($manager) {
-            $manager->registerFilters([
-                'flipCss' => [$this, 'flipCss'],
-            ]);
-        });
-    }
-    /**
-     * Twig Markup Filter 'pDate'
-     * @param $date
-     * @param $format
-     * @return string
-     */
-    public function pDate($date = null, $format = "Y/m/d")
-    {
-        return Verta::instance($date)->format($format);
-    }
-    /**
-     * Twig Markup Filter 'flipCss'
-     * @param $paths
-     * @param bool $force
-     * @return array|string
-     */
-    public function flipCss($paths)
-    {
-        if (!is_array($paths)) {
-            $paths = [$paths];
-        }
-        $rPaths = [];
-        foreach ($paths as $path) {
-            $assetPath = $path;
-            if (File::exists(dirname($assetPath) . '/' . File::name($assetPath) . '.rtl.' . File::extension($assetPath))) {
-                $newPath = dirname($assetPath) . '.rtl.' . File::extension($assetPath);
-            } else {
-                $newPath = CssFlipper::flipCss($assetPath, true);
-            }
-            $rPaths[] = $newPath;
-        }
-        return $rPaths;
     }
 }
